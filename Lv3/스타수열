@@ -1,0 +1,23 @@
+# idea : Counter를 사용하여 각 원소의 등장 횟수를 확인하고 차례로 공통 인자 조건을 체크해가며 반복문 돌림
+
+
+from collections import Counter
+
+def solution(a):
+    answer = -1
+    elements = Counter(a)
+    for key in elements.keys():
+        if elements[key] <= answer:
+            continue
+        i = 0
+        cnt = 0
+        while i < len(a)-1:
+            # 조건 1 : key에서 선택한 값은 이미 넣기로 한 값이므로 해당 값이 없으면 안되기에 무조건 있어야 함
+            # 조건 1 : 조건 1에 의해 둘중 하나는 이미 Key값인데 둘의 값이 같으면 나중에 한 부분 수열에 같은 숫자가 들어갈 수 있음
+            if (a[i] != key and a[i+1] != key) or (a[i]==a[i+1]):
+                i += 1
+            else:
+                i += 2
+                cnt += 1
+        answer = max(answer, cnt)
+    return answer * 2
